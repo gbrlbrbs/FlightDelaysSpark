@@ -1,10 +1,10 @@
 # Image for the spark cluster in docker
 
 # builder step used to download and configure spark environment
-FROM eclipse-temurin:11.0.17_8-jre-ubi9-minimal as builder
+FROM eclipse-temurin:11.0.17_8-jre-focal as builder
 
 # dependencies
-RUN apt-get update && apt-get install -y curl wget software-properties-common ssh ca-certificates python3 python3-pip python3-numpy python3-matplotlib python3-scipy python3-pandas python3-simpy
+RUN apt-get update && apt-get install -y curl wget ssh ca-certificates python3 python3-pip python3-numpy python3-matplotlib python3-scipy python3-pandas python3-simpy
 RUN update-alternatives --install "/usr/bin/python" "python" "$(which python3)" 1
 
 ENV SPARK_VERSION=3.2.2 \
