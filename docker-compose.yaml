@@ -1,4 +1,8 @@
 version: "3.3"
+volumes:
+  shared-workspace:
+    name: "hdfs"
+    driver: local
 services:
   spark-master:
     image: spark-cluster:latest
@@ -6,8 +10,9 @@ services:
       - "9090:8080"
       - "7077:7077"
     volumes:
-       - ./apps:/opt/spark-apps
        - ./data:/opt/spark-data
+       - ./logs/master:/opt/spark/logs
+       - shared-workspace:/opt/workspace
     environment:
       - SPARK_LOCAL_IP=spark-master
       - SPARK_WORKLOAD=master
@@ -27,8 +32,9 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-a
     volumes:
-       - ./apps:/opt/spark-apps
        - ./data:/opt/spark-data
+       - ./logs/worker-a:/opt/spark/logs
+       - shared-workspace:/opt/workspace
   spark-worker-b:
     image: spark-cluster:latest
     ports:
@@ -45,8 +51,15 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-b
     volumes:
-        - ./apps:/opt/spark-apps
         - ./data:/opt/spark-data
+        - ./logs/worker-b:/opt/spark/logs
+        - shared-workspace:/opt/workspace
+  jupyterlab:
+    image: spark-cluster:latest
+    container_name: jupyterlab
+    ports: "8888:8888"
+    volumes:
+        - shared-workspace:/opt/workspace
   demo-database:
     image: postgres:15.1-alpine
     ports: 
