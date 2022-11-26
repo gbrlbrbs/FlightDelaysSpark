@@ -15,7 +15,7 @@ cd /opt/spark/bin && ./spark-class org.apache.spark.deploy.worker.Worker --webui
 
 elif [ "$SPARK_WORKLOAD" == "jupyter" ];
 then
-    jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=
+    cd /opt/workspace && jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=
 else
     echo "Undefined Workload Type $SPARK_WORKLOAD, must specify: master, worker, submit"
 fi
