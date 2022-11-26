@@ -4,5 +4,8 @@
 build-image:
 	sudo docker build -t spark-cluster:latest .
 
+compose:
+	sudo docker-compose up -d
+
 get-data:
 	python get_data.py
