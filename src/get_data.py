@@ -9,7 +9,8 @@ def get_data():
         data_path.mkdir()
 
     files = list(data_path.glob("*.csv"))
-    if not files:
+    parquet_path = data_path / "flight_delays"
+    if not files and not parquet_path.exists():
         od.download(dataset_url, data_dir=str(data_path))
 
     downloaded_path = data_path / "airline-delay-and-cancellation-data-2009-2018"    
