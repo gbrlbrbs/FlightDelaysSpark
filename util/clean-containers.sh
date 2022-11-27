@@ -14,3 +14,7 @@ done
 container="$(docker ps -a | grep 'spark-master' | awk '{print $1}')"
 docker stop "${container}"
 docker rm "${container}"
+
+container="$(docker ps -a | grep 'postgres' | awk '{print $1}')"
+docker stop "${container}"
+docker rm "${container}"
