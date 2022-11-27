@@ -9,3 +9,9 @@ compose:
 
 get-data:
 	python get_data.py
+
+clean-containers:
+	sudo bash ./util/clean-containers.sh
+
+clean-volumes:
+	sudo bash ./util/clean-volumes.sh
