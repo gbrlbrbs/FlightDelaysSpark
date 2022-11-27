@@ -3,6 +3,8 @@ volumes:
   shared-workspace:
     name: "hdfs"
     driver: local
+  postgres:
+    name: "postgres"
 services:
   spark-master:
     image: spark-cluster:latest
@@ -52,8 +54,45 @@ services:
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-b
     volumes:
-        - ./data:/opt/spark-data
         - ./logs/worker-b:/opt/spark/logs
+        - shared-workspace:/opt/workspace
+  spark-worker-c:
+    image: spark-cluster:latest
+    container_name: spark-worker-c
+    ports:
+      - "9093:8080"
+      - "7002:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-c
+    volumes:
+        - ./logs/worker-c:/opt/spark/logs
+        - shared-workspace:/opt/workspace
+  spark-worker-d:
+    image: spark-cluster:latest
+    container_name: spark-worker-d
+    ports:
+      - "9094:8080"
+      - "7003:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-d
+    volumes:
+        - ./logs/worker-d:/opt/spark/logs
         - shared-workspace:/opt/workspace
   jupyterlab:
     image: spark-cluster:latest
@@ -72,3 +111,5 @@ services:
       - "5432:5432"
     environment: 
       - POSTGRES_PASSWORD=spark
+    volumes:
+      - postgres:/var/lib/postgresql/data
