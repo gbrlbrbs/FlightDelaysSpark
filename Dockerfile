@@ -15,7 +15,7 @@ SPARK_HOME=/opt/spark \
 PYTHONHASHSEED=1 \
 SHARED_WORKSPACE=${shared_workspace}
 
-RUN pip3 install wget pyspark==${SPARK_VERSION} opendatasets jupyterlab
+RUN pip3 install wget pyspark==${SPARK_VERSION} opendatasets jupyterlab, psycopg2-binary
 
 # get spark from apache archive and put in /opt/spark
 RUN wget --no-verbose -O apache-spark.tgz "https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" \
