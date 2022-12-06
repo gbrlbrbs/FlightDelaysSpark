@@ -4,4 +4,6 @@ This is a repository that analyzes the US Department of Transportation data on f
 
 We provide a Makefile to build the Docker image and start the cluster with `docker-compose`. `$ make build-image` builds the Docker image and `$ make compose` starts the cluster.
 
-The cluster is made of a Spark master node and two worker nodes. There's also a container running JupyterLab to open notebooks and Python files and a container running a Postgres database. We will compare the time of operations in Spark and Postgres as well as running the workflow in Spark.
+The cluster is made of a Spark master node and four worker nodes. There's also a container running JupyterLab to open notebooks and Python files and a container running a Postgres database. We will compare the time of operations in Spark and Postgres as well as running the workflow in Spark. To connect to JupyterLab, point to <localhost:8888>. To run the analysis, go to `src/analyze.ipynb` inside JupyterLab and run the notebook.
+
+Spark master UI is at <localhost:9090> and each worker is at ports 909X, X from 1 to 4.
